@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <div class="section_task">
         <header>
             <div class="inner-header">
                 <div style="display: flex; align-items: center;">
@@ -10,10 +10,10 @@
             </div>
 
         </header>
-        <article>
-            <TaskListRender></TaskListRender>
-        </article>
-    </section>
+        <main style="height: 100%; padding-block: 20px; overflow-y: auto; overflow-x: hidden;">
+            <TaskListRender :tasks="tasks"></TaskListRender>
+        </main>
+    </div>
 </template>
 
 <script>
@@ -32,10 +32,12 @@ export default {
         urlImage: {
             type: String,
             required: true
+        },
+        tasks: {
+            type: Array,
+            default: () => []
         }
     },
-    mounted() {
-    }
 }
 </script>
 
@@ -48,15 +50,18 @@ export default {
     font-family: gothammed;
     src: url('../assets/fonts/gotham_medium.otf');
 }
-section {
+.section_task {
     background-color: #F1F1F1;
     width: 100%;
     border-radius: 15px;
     height: 100%;
+    display: grid;
+
 }
 header{
     padding: 0 30px;
     width: 100%;
+    height: auto;
 }
 header h3{
     font-family: gothambold;

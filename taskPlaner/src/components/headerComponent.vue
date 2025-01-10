@@ -28,7 +28,7 @@
     src: url(../assets/fonts/gotham_book.otf);
 }
 header{
-    background: #000000;
+    background: #05050D;
     border-radius: 100px;
     padding: 10px 30px;
     display: flex;
@@ -64,7 +64,7 @@ input::placeholder{
 .user__btn{
     height: 30px;
     width: 30px;
-    background: #925FF0;
+    background: #9379F2;
     border-radius: 5px;
     display: flex;
     align-items: center;
