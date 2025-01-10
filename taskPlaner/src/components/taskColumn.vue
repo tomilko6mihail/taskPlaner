@@ -11,7 +11,7 @@
 
         </header>
         <main style="height: 100%; padding-block: 20px; overflow-y: auto; overflow-x: hidden;">
-            <TaskListRender :tasks="tasks"></TaskListRender>
+            <TaskListRender :statusId="statusId"></TaskListRender>
         </main>
     </div>
 </template>
@@ -33,9 +33,9 @@ export default {
             type: String,
             required: true
         },
-        tasks: {
-            type: Array,
-            default: () => []
+        statusId: {
+            type: Number,
+            required: true
         }
     },
 }
@@ -55,8 +55,8 @@ export default {
     width: 100%;
     border-radius: 15px;
     height: 100%;
-    display: grid;
-
+    display: flex;
+    flex-direction: column;
 }
 header{
     padding: 0 30px;

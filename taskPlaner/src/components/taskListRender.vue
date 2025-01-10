@@ -1,31 +1,29 @@
 <template>
     <section>
-        <TaskCard v-for="task in tasks" :key="task.id" :task="task"></TaskCard>
+        <TaskCard v-for="task in $store.state.tasks.filter(x => x.statusId === statusId)" :key="task.id" :task="task"></TaskCard>
     </section>
 </template>
 
 <script>
 import TaskCard from './taskCard.vue';
 
-    export default {
-        components: {
-            TaskCard
+export default {
+    components: {
+        TaskCard
+    },
+    props: {
+        statusId: {
+            type: Number,
+            required: true
         },
-        props:{
-            typeList: {
-                type: String,
-                required: true
-            },
-            tasks:{
-                type: Array,
-                required: true
-            }
-        }
+    },
+    mounted(){
     }
+}
 </script>
 
 <style scoped>
-section{
+section {
     width: 100%;
     padding-inline: 30px;
     height: fit-content;
