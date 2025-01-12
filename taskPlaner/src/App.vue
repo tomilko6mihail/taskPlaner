@@ -1,9 +1,10 @@
 <template>
   <div class="app">
-    <headerComponent/>
-    <main>
+    <headerComponent />
+    <main class="">
       <TaskColumn :statusId="0" :url-image="'/src/assets/img/task-square.svg'" :name-column="'Бэклог'"></TaskColumn>
-      <TaskColumn :statusId="1" :url-image="'/src/assets/img/clock.svg'" :name-column="'В процессе'" style="margin-inline: 40px;"></TaskColumn>
+      <TaskColumn :statusId="1" :url-image="'/src/assets/img/clock.svg'" :name-column="'В процессе'"
+        style="margin-inline: 40px;"></TaskColumn>
       <TaskColumn :statusId="2" :url-image="'/src/assets/img/tick-circle.svg'" :name-column="'Выполнено'"></TaskColumn>
     </main>
   </div>
@@ -12,18 +13,39 @@
 <script>
 import headerComponent from './components/headerComponent.vue';
 import TaskColumn from './components/taskColumn.vue';
-  export default {
-    components: {
-      headerComponent, TaskColumn
-    },
+import store from './store';
+export default {
+  components: {
+    headerComponent, TaskColumn
+  },
+  mounted() {
+    dragula([
+      document.getElementById(0),
+      document.getElementById(1),
+      document.getElementById(2),
+    ], {
+      accepts: function (el, target, source, sibling) {
+        return true; // по умолчанию элементы могут быть помещены в любой из `контейнеров`
+      }
+    }).on('drop', function (el, target) {
+      store.commit('setIdStatusTask', [el.className[0], target.id])
+    }).on('out', function (el, target) {
+      const sectorOut = document.getElementById(target.id).childElementCount
+      store.commit('setTriggerColumn', [target.id, sectorOut])
+    }).on('over', function (el, target) {
+      const sectorIn = document.getElementById(target.id).childElementCount
+      store.commit('setTriggerColumn', [target.id, sectorIn])
+    })
   }
+}
 </script>
 
 <style scoped>
-.app{
+.app {
   padding: 30px;
   background: white;
 }
+
 main {
   width: 100%;
   height: 80vh;

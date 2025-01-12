@@ -70,12 +70,21 @@ header h3{
 header a{
     color: black;
     font-family: gothammed;
+    text-decoration: underline solid #764ac900;
+    text-underline-offset: 15px;
+    transition: all 0.15s ease-in-out;
+}
+header a:hover{
+    color: #764ac9;
+    text-decoration: underline solid #764ac9;
+    text-underline-offset: 3px;
+    transition: all 0.15s ease-in-out;
 }
 header .inner-header {
     border-bottom: 1px solid black;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 13px 0;
+    padding: 17px 0;
 }
 </style>

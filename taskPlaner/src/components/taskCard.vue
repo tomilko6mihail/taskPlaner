@@ -1,5 +1,5 @@
 <template>
-    <article :draggable="true">
+    <article :class="task.id.toString()">
         <div :class="(isFakeCardShow ? 'fake-card active' : 'fake-card')"></div>
         <div v-on:mouseover="isFakeCardShow = true" v-on:mouseout="isFakeCardShow = false" class="card">
             <header>
