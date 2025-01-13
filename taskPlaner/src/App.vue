@@ -29,12 +29,13 @@ export default {
       }
     }).on('drop', function (el, target) {
       store.commit('setIdStatusTask', [el.className[0], target.id])
-    }).on('out', function (el, target) {
-      const sectorOut = document.getElementById(target.id).childElementCount
-      store.commit('setTriggerColumn', [target.id, sectorOut])
     }).on('over', function (el, target) {
       const sectorIn = document.getElementById(target.id).childElementCount
-      store.commit('setTriggerColumn', [target.id, sectorIn])
+      //console.log(sectorIn);
+      
+      //console.log(target, document.getElementById(target.id).childElementCount)
+      //store.commit('setTriggerColumn', target)
+      //console.log(target.id, sectorIn)
     })
   }
 }

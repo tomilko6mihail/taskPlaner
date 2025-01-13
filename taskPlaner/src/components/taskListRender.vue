@@ -1,6 +1,6 @@
 <template>
     <section :id="statusId">
-        <div v-show="($store.state.tasks.filter(x => x.statusId === statusId).length === 0) || (thisSector === 1)">
+        <div  v-show="this.length_of_element_in_column === 1">
             <h3 style="margin-bottom: 4px;">Здесь ничего нет.</h3>
             <p>Перетащите задачу в эту область, или создайте новую.</p>
         </div>
@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import store from '@/store';
 import TaskCard from './taskCard.vue';
 
 export default {
@@ -22,9 +23,20 @@ export default {
             required: true
         },
     },
-    mounted(){
-        const thisSector = document.getElementById(this.statusId).childElementCount
-        console.log(thisSector)
+    data() {
+        return {
+            length_of_element_in_column: 2
+        }
+    },
+    mounted() {
+        const observer = new MutationObserver(mutations => {
+            mutations.forEach(mutation => {
+                if (mutation.addedNodes.length) this.length_of_element_in_column = document.getElementById(this.statusId).childElementCount, console.log(document.getElementById(this.statusId).childElementCount, this.statusId, "зашел");
+                else if (mutation.removedNodes.length) this.length_of_element_in_column = document.getElementById(this.statusId).childElementCount, console.log(document.getElementById(this.statusId).childElementCount, this.statusId, "вышел");
+            });
+        });
+        const config = { childList: true };
+        observer.observe(document.getElementById(this.statusId), config);
     }
 }
 </script>
@@ -63,6 +75,7 @@ div {
     text-align: center;
     padding: 15px;
     stroke-dasharray: 5px;
+    margin-bottom: 30px;
 }
 
 section {

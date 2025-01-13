@@ -11,7 +11,8 @@ export default createStore({
             0: 2,
             1: 2,
             2: 2
-        }
+        },
+        dragOutNative: 1
     },
     mutations: {
         deleteTask(state, idTask){
@@ -22,10 +23,21 @@ export default createStore({
         },
         setIdStatusTask(state, params){
             state.tasks[parseInt(params[0])].statusId = parseInt(params[1])
+            state.dragOutNative = 1
         },
         setTriggerColumn(state, columnParams){
-            state.columnsTriggers[columnParams[0]] = columnParams[1]
-            console.log(state.columnsTriggers)
+            state.dragOutNative += 1
+            if(state.dragOutNative > 2){
+                console.log(document.getElementById(0).childElementCount);
+                console.log(document.getElementById(1).childElementCount);
+                console.log(document.getElementById(2).childElementCount);
+                state.columnsTriggers[0] = document.getElementById(0).childElementCount
+                state.columnsTriggers[1] = document.getElementById(1).childElementCount
+                state.columnsTriggers[2] = document.getElementById(2).childElementCount
+                //state.columnsTriggers[columnParams[0]] = columnParams[1]
+                //console.log(state.columnsTriggers[2])
+                //console.log(columnParams.id, document.getElementById(columnParams.id).childElementCount)
+            }
         }
     }
 })
