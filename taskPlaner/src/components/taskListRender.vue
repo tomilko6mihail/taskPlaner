@@ -4,13 +4,12 @@
             <h3 style="margin-bottom: 4px;">Здесь ничего нет.</h3>
             <p>Перетащите задачу в эту область, или создайте новую.</p>
         </div>
-        <TaskCard v-for="task in $store.state.tasks.filter(x => x.statusId === statusId)" :key="task.id" :task="task">
+        <TaskCard v-for="task in tasks.filter(x => x.statusId === statusId)" :key="task.id" :task="task">
         </TaskCard>
     </section>
 </template>
 
 <script>
-import store from '@/store';
 import TaskCard from './taskCard.vue';
 
 export default {
@@ -22,6 +21,10 @@ export default {
             type: Number,
             required: true
         },
+        tasks: {
+            type: Array,
+            required: true
+        }
     },
     data() {
         return {
@@ -31,8 +34,8 @@ export default {
     mounted() {
         const observer = new MutationObserver(mutations => {
             mutations.forEach(mutation => {
-                if (mutation.addedNodes.length) this.length_of_element_in_column = document.getElementById(this.statusId).childElementCount, console.log(document.getElementById(this.statusId).childElementCount, this.statusId, "зашел");
-                else if (mutation.removedNodes.length) this.length_of_element_in_column = document.getElementById(this.statusId).childElementCount, console.log(document.getElementById(this.statusId).childElementCount, this.statusId, "вышел");
+                if (mutation.addedNodes.length) this.length_of_element_in_column = document.getElementById(this.statusId).childElementCount//, console.log(document.getElementById(this.statusId).childElementCount, this.statusId, "зашел");
+                else if (mutation.removedNodes.length) this.length_of_element_in_column = document.getElementById(this.statusId).childElementCount//, console.log(document.getElementById(this.statusId).childElementCount, this.statusId, "вышел");
             });
         });
         const config = { childList: true };

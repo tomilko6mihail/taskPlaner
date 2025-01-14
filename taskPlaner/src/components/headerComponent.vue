@@ -6,7 +6,7 @@
         </div>
         <div style="display: flex; align-items: center;">
             <a href=""><img src="../assets/img/sort.svg" alt="filter"></a>
-            <input placeholder="Поиск..." type="text">
+            <input @input="updateInput" placeholder="Поиск..." type="text">
             <button class="user__btn"><img src="../assets/img/user-square.svg" alt="user-square"></button>
         </div>
     </header>
@@ -14,7 +14,11 @@
 
 <script>
     export default {
-        
+        methods: {
+            updateInput(event){
+                this.$emit("update:modelValue", event.target.value)
+            }
+        }
     }
 </script>
 
