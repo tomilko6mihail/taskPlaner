@@ -1,5 +1,5 @@
 <template>
-    <article :class="task.id.toString()">
+    <article :id="`${task.id.toString()}i`" :class="task.id.toString()">
         <div :class="(isFakeCardShow ? 'fake-card active' : 'fake-card')"></div>
         <div v-on:mouseover="isFakeCardShow = true" v-on:mouseout="isFakeCardShow = false" class="card">
             <header>
@@ -11,7 +11,7 @@
                 <label>Ответственный:</label>
                 <p>{{ task.responsible === "" ? 'Не назначен' : task.responsible }}</p>
                 <div class="two-btns">
-                    <button class="violet"><img src="../assets/img/setting.svg" alt="params">Параметры</button>
+                    <button @click="$store.commit('setOptionRenderModal', 'viewTask'), $store.commit('setCurrentDisplayTask', task), $store.commit('toggleDialog')" class="violet"><img src="../assets/img/setting.svg" alt="params">Параметры</button>
                     <button @click="$store.commit('deleteTask', task.id)" class="red" style="border-color: #ef4c4c; width: 46px; margin-left: 10px;"><img
                             src="../assets/img/trash.svg" alt="" style="margin: 0;"></button>
                 </div>

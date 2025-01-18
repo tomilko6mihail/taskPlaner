@@ -6,7 +6,7 @@
                     <img :src="urlImage" width="20" alt="icon">
                     <h3>{{ nameColumn }}</h3>
                 </div>
-                <a href="">+ задача</a>
+                <a role="button" @click="$store.commit('setOptionRenderModal', 'addTask'), $store.commit('toggleDialog'), $store.commit('setCurrentDisplayTask', {statusId: statusId})">+ задача</a>
             </div>
 
         </header>
