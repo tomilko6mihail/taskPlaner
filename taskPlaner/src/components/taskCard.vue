@@ -3,7 +3,7 @@
         <div :class="(isFakeCardShow ? 'fake-card active' : 'fake-card')"></div>
         <div v-on:mouseover="isFakeCardShow = true" v-on:mouseout="isFakeCardShow = false" class="card">
             <header>
-                <div class="drag-n-drop-btn"></div>
+                <div v-if="screen > 975" class="drag-n-drop-btn"></div>
             </header>
             <main>
                 <label>Название:</label>
@@ -31,7 +31,8 @@ export default {
     },
     data(){
         return {
-            isFakeCardShow: false
+            isFakeCardShow: false,
+            screen: window.innerWidth
         }
     }
 }

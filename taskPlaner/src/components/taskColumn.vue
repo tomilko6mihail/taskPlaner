@@ -1,16 +1,19 @@
 <template>
     <div class="section_task">
         <header>
-            <div class="inner-header">
+            <div :style="toggleShowContent || isDesktop ? 'border-bottom: 1px solid black;' : 'border-bottom: none'" class="inner-header">
                 <div style="display: flex; align-items: center;">
                     <img :src="urlImage" width="20" alt="icon">
-                    <h3>{{ nameColumn }}</h3>
+                    <div @click="toggleShowContent = !toggleShowContent" style="display: flex; align-items: center;">
+                        <h3>{{ nameColumn }}</h3>
+                        <img v-if="!isDesktop" style="margin-left: 5px;" :class="toggleShowContent ? 'arrow-down' : 'arrow-up'" src="../assets/img/arrow-down.svg" alt="arrow">
+                    </div>
                 </div>
-                <a role="button" @click="$store.commit('setOptionRenderModal', 'addTask'), $store.commit('toggleDialog'), $store.commit('setCurrentDisplayTask', {statusId: statusId})">+ задача</a>
+                <a role="button" style="cursor: pointer;" @click="$store.commit('setOptionRenderModal', 'addTask'), $store.commit('toggleDialog'), $store.commit('setCurrentDisplayTask', {statusId: statusId})">+ задача</a>
             </div>
 
         </header>
-        <main style="height: 100%; padding-block: 20px; overflow-y: auto; overflow-x: hidden;">
+        <main v-if="toggleShowContent || isDesktop" style="height: 100%; overflow-y: auto; overflow-x: hidden;">
             <TaskListRender :selectedSort="selectedSort" :tasks="tasks" :statusId="statusId"></TaskListRender>
         </main>
     </div>
@@ -46,6 +49,17 @@ export default {
             default: "title"
         }
     },
+    data(){
+        return{
+            toggleShowContent: true
+        }
+    },
+    computed: {
+        isDesktop(){
+            if(window.innerWidth > 976) return true
+            else return false
+        }
+    }
 }
 </script>
 
@@ -58,6 +72,7 @@ export default {
     font-family: gothammed;
     src: url('../assets/fonts/gotham_medium.otf');
 }
+
 .section_task {
     background-color: #F1F1F1;
     width: 100%;
@@ -65,6 +80,20 @@ export default {
     height: 100%;
     display: flex;
     flex-direction: column;
+}
+@media (max-width: 975px){
+    .section_task{
+        margin-bottom: 30px
+    }
+
+}
+.arrow-down{
+    transform: rotateZ(0deg);
+    transition: all 0.15s ease-in-out;
+}
+.arrow-up{
+    transform: rotateZ(180deg);
+    transition: all 0.15s ease-in-out;
 }
 header{
     padding: 0 30px;

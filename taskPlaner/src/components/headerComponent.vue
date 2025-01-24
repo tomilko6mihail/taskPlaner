@@ -27,9 +27,9 @@
                 <div class="filter-right"></div>
 
             </div>
-            <a @click="toggleFilter = !toggleFilter" role="button"><img src="../assets/img/sort.svg" alt="filter"></a>
             <input @input="updateInput" placeholder="Поиск..." type="text">
-            <button class="user__btn"><img src="../assets/img/user-square.svg" alt="user-square"></button>
+            <a @click="toggleFilter = !toggleFilter" role="button" style="cursor: pointer;"><img src="../assets/img/sort.svg" alt="filter"></a>
+            <button @click="$store.commit('setOptionRenderModal', 'profile'), $store.commit('toggleDialog')" class="user__btn"><img src="../assets/img/user-square.svg" alt="user-square"></button>
         </div>
     </header>
 </template>
@@ -66,6 +66,57 @@ export default {
     font-family: gothammedium;
     src: url(../assets/fonts/gotham_medium.otf);
 }
+@media (max-width: 715px){
+    header{
+        height: auto;
+    }
+    header h1 {
+    width: 50%;
+    font-size: 15px;
+    margin-right: 50px;
+}
+.filter-comp{
+    bottom: -291%!important;
+}
+}
+@media (max-width: 670px){
+    header h1 {
+        display: none;
+        margin: 0;
+}
+.filter-comp{
+        bottom: -349%!important;
+        
+    }
+}
+@media (max-width: 520px){
+    header div img[alt="logo"]{
+        display: none;
+    }
+    header{
+        justify-content: center!important;
+    }
+    .filter-comp{
+        left: -5%!important;
+        bottom: -349%!important;
+        
+    }
+}
+@media (max-width: 390px){
+    header div img[alt="logo"]{
+        display: none;
+    }
+    header{
+        justify-content: center!important;
+    }
+    input[type="text"]{
+        width: 100%!important;
+    }
+    .filter-comp{
+        left: -5%!important;
+        bottom: -343%!important;
+    }
+}
 
 h2 {
     font-family: gothammedium;
@@ -92,7 +143,7 @@ label {
     width: 110%;
     height: auto;
     z-index: 1;
-    left: -48%;
+    left: -11%;
     bottom: -348%;
     transform: rotateX(0deg);
     transform-origin: top;
@@ -134,8 +185,9 @@ header {
     padding: 10px 30px;
     display: flex;
     justify-content: space-between;
+    flex-wrap: nowrap;
     width: 100%;
-    height: 70px;
+    min-height: 70px;
     margin-bottom: 30px;
     position: relative;
     z-index: 2;
@@ -143,6 +195,7 @@ header {
 
 a {
     display: flex;
+    margin-inline: 10px;
 }
 
 header h1 {
@@ -168,7 +221,6 @@ input[type="text"] {
     top: 0;
     background-color: white;
     font-family: gothambook;
-    margin-inline: 10px;
     transition: all 0.2s ease-in-out;
 }
 
@@ -184,6 +236,7 @@ input[type="text"]:focus{
 .user__btn {
     height: 30px;
     width: 30px;
+    padding: 5px;
     background: #9379F2;
     border-radius: 5px;
     display: flex;

@@ -21,7 +21,7 @@
                                 $store.state.currentDisplayTask.responsible }}</textarea>
                 </main>
                 <footer class="footer-task">
-                    <div style="display: flex; align-items: center;">
+                    <div class="select-div" style="display: flex; align-items: center;">
                         <img src="../../assets/img/menu.svg" height="13px" style="margin-right: 7px;" alt="">
                         <select id="task_select" name="selectStatus">
                             <option :selected="$store.state.currentDisplayTask.statusId === 0 ? true : false" value="0">
@@ -32,9 +32,9 @@
                                 Выполнено</option>
                         </select>
                     </div>
-                    <div style="display: flex;">
-                        <a role="button" @click="manipulateTask('editTask')">Сохранить изменения</a>
-                        <p style="margin-inline: 10px; color: #764ac9;"><b>/</b></p>
+                    <div :style="screen > 428 ? 'display: flex; flex-wrap: wrap;' : 'display: flex; flex-wrap: wrap; flex-direction: column'">
+                        <a :style="screen > 428 ? '' : 'margin-bottom: 5px'" role="button" @click="manipulateTask('editTask')">Сохранить изменения</a>
+                        <p v-if="screen > 428" style="margin-inline: 10px; color: #764ac9;"><b>/</b></p>
                         <a role="button" @click="$store.commit('deleteTask', $store.state.currentDisplayTask.id), $store.commit('toggleDialog')">Удалить задачу</a>
                     </div>
                 </footer>
@@ -67,6 +67,14 @@
                     <a role="button" @click="manipulateTask('addTask')">Добавить задачу</a>
                 </footer>
             </div>
+            <div v-if="optionRender === 'profile'">
+                <main>
+                    <h1>не батрачит</h1>
+                </main>
+                <footer style="margin-top: 25px; cursor: pointer;">
+                    <a role="button" @click="$store.commit('toggleDialog')">понятно</a>
+                </footer>
+            </div>
         </div>
     </section>
 </template>
@@ -84,6 +92,11 @@ export default {
         optionRender: {
             type: String,
             default: "none"
+        }
+    },
+    data(){
+        return{
+            screen: window.innerWidth
         }
     },
     methods: {
@@ -109,6 +122,7 @@ export default {
         }
     },
     mounted() {
+        if (this.optionRender === 'viewTask' || this.optionRender === 'addTask'){
         let el = document.getElementById(`task_textarea_title`)
         el.style.height = '5px';
         el.style.height = el.scrollHeight + 'px';
@@ -118,6 +132,7 @@ export default {
         let el3 = document.getElementById(`task_textarea_responsible`)
         el3.style.height = '5px';
         el3.style.height = el3.scrollHeight + 'px';
+        }
     }
 }
 </script>
@@ -146,6 +161,7 @@ export default {
 .footer-task {
     background: #E9DFFC;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
@@ -153,7 +169,16 @@ export default {
     margin-top: 15px;
     border-radius: 10px;
 }
-
+@media (max-width: 536px){
+    .select-div{
+        margin-bottom: 10px;
+    }
+}
+@media (max-width: 964px and min-width: 716px){
+    .select-div{
+        margin-bottom: 10px;
+    }
+}
 a {
     font-family: gothambook;
     font-size: 15px;
@@ -195,7 +220,26 @@ select:focus {
     justify-content: center;
     align-items: center;
     z-index: 5;
-    padding: 50px;
+    padding: 5%;
+    animation-name: blured;
+    animation-duration: .2s;
+    animation-iteration-count: 1;
+}
+@keyframes blured {
+    from{
+        backdrop-filter: blur(0px);
+        background: rgba(0, 0, 0, 0);
+    }
+    to{
+        backdrop-filter: blur(5px);
+        background: rgba(0, 0, 0, 0.5);
+    }
+}
+@media (max-width: 715px){
+    .modal-window{
+        max-width: 100%!important;
+        width: 100%!important;
+    }
 }
 
 .modal-window {
@@ -206,8 +250,23 @@ select:focus {
     border-radius: 8px;
     box-shadow: 0 0 20px -5px rgba(255, 255, 255, 0.7);
     padding: 25px;
+    position: relative;
+    top: 0;
+    opacity: 1;
+    animation-name: blop;
+    animation-duration: .2s;
+    animation-iteration-count: 1;
 }
-
+@keyframes blop{
+    from{
+        top: 25px;
+        opacity: 0;
+    }
+    to{
+        top: 0;
+        opacity: 1;
+    }
+}
 label {
     font-family: gothamlight;
     font-size: 13px;

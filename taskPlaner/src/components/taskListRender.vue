@@ -4,8 +4,10 @@
             <h3 style="margin-bottom: 4px;">Здесь ничего нет.</h3>
             <p>Перетащите задачу в эту область, или создайте новую.</p>
         </div>
-        <TaskCard v-for="task in sortedPosts" :key="task.id" :task="task">
-        </TaskCard>
+        <transition-group name="listTask">
+            <TaskCard class="listTask-item" v-for="task in sortedPosts" :key="task.id" :task="task">
+            </TaskCard>
+        </transition-group>
     </section>
 </template>
 
@@ -35,6 +37,7 @@ export default {
         return {
             length_of_element_in_column: 2,
             thisTasks: this.tasks.filter(x => x.statusId === this.statusId),
+            screen: window.innerWidth
         }
     },
     mounted() {
@@ -100,9 +103,29 @@ div {
 section {
     width: 100%;
     padding-inline: 30px;
+    padding-block: 20px;
     height: fit-content;
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
+}
+
+
+
+.listTask-item {
+  transition: all 0.5s ease;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.listTask-enter-from,
+.listTask-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.listTask-leave-active {
+    position: absolute;
 }
 </style>
