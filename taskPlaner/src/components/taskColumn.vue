@@ -11,7 +11,7 @@
 
         </header>
         <main style="height: 100%; padding-block: 20px; overflow-y: auto; overflow-x: hidden;">
-            <TaskListRender :tasks="tasks" :statusId="statusId"></TaskListRender>
+            <TaskListRender :selectedSort="selectedSort" :tasks="tasks" :statusId="statusId"></TaskListRender>
         </main>
     </div>
 </template>
@@ -40,6 +40,10 @@ export default {
         tasks: {
             type: Array,
             default: () => []
+        },
+        selectedSort: {
+            type: String,
+            default: "title"
         }
     },
 }

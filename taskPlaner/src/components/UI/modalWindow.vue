@@ -35,7 +35,7 @@
                     <div style="display: flex;">
                         <a role="button" @click="manipulateTask('editTask')">Сохранить изменения</a>
                         <p style="margin-inline: 10px; color: #764ac9;"><b>/</b></p>
-                        <a role="button">Удалить задачу</a>
+                        <a role="button" @click="$store.commit('deleteTask', $store.state.currentDisplayTask.id), $store.commit('toggleDialog')">Удалить задачу</a>
                     </div>
                 </footer>
             </div>

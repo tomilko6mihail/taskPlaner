@@ -1,15 +1,16 @@
 <template>
     <section :id="statusId">
-        <div  v-show="this.length_of_element_in_column === 1">
+        <div v-show="this.length_of_element_in_column === 1">
             <h3 style="margin-bottom: 4px;">Здесь ничего нет.</h3>
             <p>Перетащите задачу в эту область, или создайте новую.</p>
         </div>
-        <TaskCard v-for="task in tasks.filter(x => x.statusId === statusId)" :key="task.id" :task="task">
+        <TaskCard v-for="task in sortedPosts" :key="task.id" :task="task">
         </TaskCard>
     </section>
 </template>
 
 <script>
+import store from '@/store';
 import TaskCard from './taskCard.vue';
 
 export default {
@@ -24,11 +25,16 @@ export default {
         tasks: {
             type: Array,
             required: true
+        },
+        selectedSort: {
+            type: String,
+            required: true
         }
     },
     data() {
         return {
-            length_of_element_in_column: 2
+            length_of_element_in_column: 2,
+            thisTasks: this.tasks.filter(x => x.statusId === this.statusId),
         }
     },
     mounted() {
@@ -40,6 +46,16 @@ export default {
         });
         const config = { childList: true };
         observer.observe(document.getElementById(this.statusId), config);
+        //.filter(x => x.statusId === this.statusId)
+    },
+    computed:{
+        sortedPosts(){      
+            //console.log(this.taskThis);
+            this.thisTasks = this.tasks.filter(x => x.statusId === this.statusId)
+            return [...this.thisTasks].sort((post1, post2) => {
+                return post1[this.selectedSort]?.localeCompare(post2[this.selectedSort]) //сравниваем x двух постов
+            })
+        }
     }
 }
 </script>

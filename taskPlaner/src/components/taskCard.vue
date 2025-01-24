@@ -143,7 +143,7 @@ article .card {
     border-radius: 10px;
     box-shadow: 0px 5px 5px rgb(0 0 0 / 10%);
     display: flex;
-    z-index: 2;
+    z-index: 1;
     position: relative;
     flex-direction: column;
     transition: all 0.15s ease-in-out;

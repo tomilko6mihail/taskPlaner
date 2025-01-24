@@ -3,11 +3,11 @@
     <headerComponent v-model="search" />
     <main class="">
       <ModalWindow :optionRender="$store.state.optionRenderModal" v-if="$store.state.isShowDialog"></ModalWindow>
-      <TaskColumn :tasks="searchTasks" :statusId="0" :url-image="'/src/assets/img/task-square.svg'"
+      <TaskColumn :selectedSort="selectedSort" :tasks="searchTasks" :statusId="0" :url-image="'/src/assets/img/task-square.svg'"
         :name-column="'Бэклог'"></TaskColumn>
-      <TaskColumn :tasks="searchTasks" :statusId="1" :url-image="'/src/assets/img/clock.svg'"
+      <TaskColumn :selectedSort="selectedSort" :tasks="searchTasks" :statusId="1" :url-image="'/src/assets/img/clock.svg'"
         :name-column="'В процессе'" style="margin-inline: 40px;"></TaskColumn>
-      <TaskColumn :tasks="searchTasks" :statusId="2" :url-image="'/src/assets/img/tick-circle.svg'"
+      <TaskColumn :selectedSort="selectedSort" :tasks="searchTasks" :statusId="2" :url-image="'/src/assets/img/tick-circle.svg'"
         :name-column="'Выполнено'"></TaskColumn>
     </main>
   </div>
@@ -44,6 +44,9 @@ export default {
   computed: {
     searchTasks() {
       return store.state.tasks.filter(task => task.title.toLowerCase().includes(this.search.toLowerCase()))
+    },
+    selectedSort(){
+      return store.state.selectedSort
     }
   }
 }
