@@ -15,6 +15,8 @@
 </template>
 
 <script>
+
+import dragula from 'dragula'; //включать при деплое
 import headerComponent from './components/headerComponent.vue';
 import TaskColumn from './components/taskColumn.vue';
 import ModalWindow from './components/UI/modalWindow.vue';
