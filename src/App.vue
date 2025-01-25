@@ -4,12 +4,12 @@
     <main class="">
       <ModalWindow :optionRender="$store.state.optionRenderModal" v-if="$store.state.isShowDialog"></ModalWindow>
       <TaskColumn :selectedSort="selectedSort" :tasks="searchTasks" :statusId="0"
-        :url-image="'../public/task-square.svg'" :name-column="'Бэклог'"></TaskColumn>
+        :url-image="'../../public/task-square.svg'" :name-column="'Бэклог'"></TaskColumn>
       <TaskColumn :selectedSort="selectedSort" :tasks="searchTasks" :statusId="1"
-        :url-image="'../public/clock.svg'" :name-column="'В процессе'"
+        :url-image="'../../public/clock.svg'" :name-column="'В процессе'"
         :style="screenWidth > 975 ? 'margin-inline: 40px;' : ''"></TaskColumn>
       <TaskColumn :selectedSort="selectedSort" :tasks="searchTasks" :statusId="2"
-        :url-image="'../public/tick-circle.svg'" :name-column="'Выполнено'"></TaskColumn>
+        :url-image="'../../public/tick-circle.svg'" :name-column="'Выполнено'"></TaskColumn>
     </main>
   </div>
 </template>

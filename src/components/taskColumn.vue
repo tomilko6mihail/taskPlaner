@@ -3,7 +3,7 @@
         <header>
             <div :style="toggleShowContent || isDesktop ? 'border-bottom: 1px solid black;' : 'border-bottom: none'" class="inner-header">
                 <div style="display: flex; align-items: center;">
-                    <img src="../../public/clock.svg" width="20" alt="icon">
+                    <img :src="urlImage" width="20" alt="icon">
                     <div @click="toggleShowContent = !toggleShowContent" style="display: flex; align-items: center;">
                         <h3>{{ nameColumn }}</h3>
                         <img v-if="!isDesktop" style="margin-left: 5px;" :class="toggleShowContent ? 'arrow-down' : 'arrow-up'" src="../assets/img/arrow-down.svg" alt="arrow">
