@@ -64,15 +64,6 @@ export default {
 </script>
 
 <style scoped>
-@font-face {
-    font-family: gothambold;
-    src: url(../assets/fonts/gotham_bold.otf);
-}
-
-@font-face {
-    font-family: gothamlight;
-    src: url(../assets/fonts/gotham_light.otf);
-}
 
 h3 {
     font-family: gothambold;

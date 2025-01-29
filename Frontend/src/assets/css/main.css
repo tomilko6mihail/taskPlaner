@@ -4,6 +4,22 @@
   padding: 0;
   text-decoration: none;
 }
+@font-face {
+    font-family: gothambold;
+    src: url('../fonts/gotham_bold.otf');
+}
+@font-face {
+    font-family: gothammedim;
+    src: url('../fonts/gotham_medium.otf');
+}
+@font-face {
+  font-family: gothambook;
+  src: url('../fonts/gotham_book.otf');
+}
+@font-face {
+  font-family: gothamlight;
+  src: url('../fonts/gotham_light.otf');
+}
 .gu-mirror {
   position: fixed !important;
   margin: 0 !important;

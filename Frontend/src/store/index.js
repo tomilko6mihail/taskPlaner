@@ -100,5 +100,20 @@ export default createStore({
         console.log('end fetch')
       }
     },
+    async loginUser() {
+      try {
+        const response = await axios.post('http://127.0.0.1:8000/api/login', {
+            email: 'penis@yadenx.ru',
+            password: 'huilo228'
+          }
+        )
+        console.log(response.data)
+      } catch (e) {
+        console.log(e)
+        //alert("Error server");
+      } finally {
+        console.log('end fetch')
+      }
+    },
   },
 });

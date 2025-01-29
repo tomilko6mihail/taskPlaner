@@ -52,20 +52,6 @@ export default {
 </script>
 
 <style scoped>
-@font-face {
-    font-family: gothamlight;
-    src: url(../assets/fonts/gotham_light.otf);
-}
-
-@font-face {
-    font-family: gothambook;
-    src: url(../assets/fonts/gotham_book.otf);
-}
-
-@font-face {
-    font-family: gothammedium;
-    src: url(../assets/fonts/gotham_medium.otf);
-}
 @media (max-width: 715px){
     header{
         height: auto;
@@ -219,6 +205,7 @@ input[type="text"] {
     outline: none;
     position: relative;
     top: 0;
+    box-shadow: 0px 0px 0px 0px rgb(180, 180, 180);
     background-color: white;
     font-family: gothambook;
     transition: all 0.2s ease-in-out;

@@ -62,14 +62,6 @@ export default {
 </script>
 
 <style scoped>
-@font-face {
-    font-family: gothambold;
-    src: url('../assets/fonts/gotham_bold.otf');
-}
-@font-face {
-    font-family: gothammed;
-    src: url('../assets/fonts/gotham_medium.otf');
-}
 
 .section_task {
     background-color: #F1F1F1;
@@ -104,7 +96,7 @@ header h3{
 }
 header a{
     color: black;
-    font-family: gothammed;
+    font-family: gothammedium;
     text-decoration: underline solid #764ac900;
     text-underline-offset: 15px;
     transition: all 0.15s ease-in-out;

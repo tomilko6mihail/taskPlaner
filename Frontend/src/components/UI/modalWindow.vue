@@ -68,12 +68,18 @@
                 </footer>
             </div>
             <div v-if="optionRender === 'profile'">
+                <header>
+                    <h2>Вход в аккаунт</h2>
+                </header>
                 <main>
-                    <h1>не батрачит</h1>
+                    <form novalidate class="form-login" @submit="loginUser" @submit.prevent="" action="" method="get">
+                        <div>
+                            <MyInput v-model:inputValue="email" :type="'email'" :pler="'Почта'" :id="1"></MyInput>
+                            <MyInput v-model:inputValue="password" :type="'password'" :pler="'Пароль'" :id="2"></MyInput>
+                        </div>
+                        <input class="form-submit" type="submit" value="Войти в аккаунт">
+                    </form>
                 </main>
-                <footer style="margin-top: 25px; cursor: pointer;">
-                    <a role="button" @click="$store.commit('toggleDialog')">понятно</a>
-                </footer>
             </div>
         </div>
     </section>
@@ -81,6 +87,7 @@
 
 <script>
 import store from '@/store';
+import { mapActions } from 'vuex';
 
 export default {
     name: "ModalWindow",
@@ -100,6 +107,9 @@ export default {
         }
     },
     methods: {
+        ...mapActions({
+            loginUser: 'loginUser'
+        }),
         hideDialog() {
             store.commit('toggleDialog')
         },
@@ -138,26 +148,10 @@ export default {
 </script>
 
 <style scoped>
-@font-face {
-    font-family: gothamlight;
-    src: url(../../assets/fonts/gotham_light.otf);
-}
-
-@font-face {
+h2{
     font-family: gothambold;
-    src: url(../../assets/fonts/gotham_bold.otf);
+    margin-bottom: 10px;
 }
-
-@font-face {
-    font-family: gothambook;
-    src: url(../../assets/fonts/gotham_book.otf);
-}
-
-@font-face {
-    font-family: gothammedium;
-    src: url(../../assets/fonts/gotham_medium.otf);
-}
-
 .footer-task {
     background: #E9DFFC;
     display: flex;
@@ -169,12 +163,50 @@ export default {
     margin-top: 15px;
     border-radius: 10px;
 }
+.form-login{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.form-submit{
+    width: 100%;
+    font-family: gothambold;
+    color: white;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #764ac9;
+    border-radius: 150px;
+    outline: none;
+    border: none;
+    padding: 10px;
+    margin-top: 20px;
+    position: relative;
+    top: -3px;
+    box-shadow: 0 3px 0 0 #583697;
+    transition: all 0.2s ease-in-out;
+}
+.form-submit:hover{
+ background: #9061e7;
+ transition: all 0.2s ease-in-out;
+}
+.form-submit:active{
+    top: 0;
+    box-shadow: 0 0px 0 0 #583697;
+    transition: all 0.1s ease-in-out;
+}
 @media (max-width: 536px){
     .select-div{
         margin-bottom: 10px;
     }
 }
-@media (max-width: 964px and min-width: 716px){
+@media (max-width: 964px){
+    .select-div{
+        margin-bottom: 10px;
+    }
+}
+@media (min-width: 716px){
     .select-div{
         margin-bottom: 10px;
     }
