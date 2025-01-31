@@ -32,10 +32,14 @@
                                 Выполнено</option>
                         </select>
                     </div>
-                    <div :style="screen > 428 ? 'display: flex; flex-wrap: wrap;' : 'display: flex; flex-wrap: wrap; flex-direction: column'">
-                        <a :style="screen > 428 ? '' : 'margin-bottom: 5px'" role="button" @click="manipulateTask('editTask')">Сохранить изменения</a>
+                    <div
+                        :style="screen > 428 ? 'display: flex; flex-wrap: wrap;' : 'display: flex; flex-wrap: wrap; flex-direction: column'">
+                        <MyLink :style="screen > 428 ? '' : 'margin-bottom: 5px'" @click="manipulateTask('editTask')"
+                            :gotham="'book'" :color="'purple'">Сохранить изменения</MyLink>
                         <p v-if="screen > 428" style="margin-inline: 10px; color: #764ac9;"><b>/</b></p>
-                        <a role="button" @click="$store.commit('deleteTask', $store.state.currentDisplayTask.id), $store.commit('toggleDialog')">Удалить задачу</a>
+                        <MyLink
+                            @click="$store.commit('deleteTask', $store.state.currentDisplayTask.id), $store.commit('toggleDialog')"
+                            :gotham="'book'" :color="'purple'">Удалить задачу</MyLink>
                     </div>
                 </footer>
             </div>
@@ -43,8 +47,8 @@
                 <main>
                     <label>Название:</label>
                     <textarea rows="1" @focus="autoGrow('task_textarea_title')" id="task_textarea_title"
-                        @input="autoGrow('task_textarea_title')" maxlength="100" class="input-task-active input-task title"
-                        placeholder="Название задачи"></textarea>
+                        @input="autoGrow('task_textarea_title')" maxlength="100"
+                        class="input-task-active input-task title" placeholder="Название задачи"></textarea>
                     <label>Описание:</label>
                     <textarea rows="1" @focus="autoGrow('task_textarea_description')" id="task_textarea_description"
                         @input="autoGrow('task_textarea_description')" maxlength="300"
@@ -52,34 +56,69 @@
                     <label>Ответственный:</label>
                     <textarea rows="1" @focus="autoGrow('task_textarea_responsible')" id="task_textarea_responsible"
                         @input="autoGrow('task_textarea_responsible')" maxlength="50"
-                        class="input-task-active input-task responsible" placeholder="Ответственный за выполнение"></textarea>
+                        class="input-task-active input-task responsible"
+                        placeholder="Ответственный за выполнение"></textarea>
                     <label>Текущий статус:</label>
-                    <div style="display: flex; align-items: center; width: fit-content; height: auto; background: rgb(235, 230, 244); border-radius: 4px; padding: 8px;">
+                    <div
+                        style="display: flex; align-items: center; width: fit-content; height: auto; background: rgb(235, 230, 244); border-radius: 4px; padding: 8px;">
                         <img src="../../assets/img/menu.svg" height="13px" style="margin-right: 7px;" alt="">
                         <select id="task_select" name="selectStatus">
-                            <option :selected="$store.state.currentDisplayTask.statusId === 0 ? true : false" selected value="0">Бэклог</option>
-                            <option :selected="$store.state.currentDisplayTask.statusId === 1 ? true : false" value="1">В процессе</option>
-                            <option :selected="$store.state.currentDisplayTask.statusId === 2 ? true : false" value="2">Выполнено</option>
+                            <option :selected="$store.state.currentDisplayTask.statusId === 0 ? true : false" selected
+                                value="0">Бэклог</option>
+                            <option :selected="$store.state.currentDisplayTask.statusId === 1 ? true : false" value="1">
+                                В процессе</option>
+                            <option :selected="$store.state.currentDisplayTask.statusId === 2 ? true : false" value="2">
+                                Выполнено</option>
                         </select>
                     </div>
                 </main>
                 <footer style="margin-top: 25px; cursor: pointer;">
-                    <a role="button" @click="manipulateTask('addTask')">Добавить задачу</a>
+                    <MyLink @click="manipulateTask('addTask')" :gotham="'book'" :color="'purple'">Сохранить изменения
+                    </MyLink>
                 </footer>
             </div>
-            <div v-if="optionRender === 'profile'">
-                <header>
-                    <h2>Вход в аккаунт</h2>
+            <div v-if="optionRender === 'auth'">
+                <header style="position: relative; height: 20px; margin-bottom: 10px;">
+                    <h2 style="position: absolute; transform-origin: top;"
+                        :class="showLogin ? 'show-login' : 'hide-login'">Вход в аккаунт</h2>
+                    <h2 style="position: absolute; transform-origin: bottom;"
+                        :class="showLogin ? 'hide-reg' : 'show-reg'">Регистрация</h2>
                 </header>
                 <main>
                     <form novalidate class="form-login" @submit="loginUser" @submit.prevent="" action="" method="get">
                         <div>
                             <MyInput v-model:inputValue="email" :type="'email'" :pler="'Почта'" :id="1"></MyInput>
-                            <MyInput v-model:inputValue="password" :type="'password'" :pler="'Пароль'" :id="2"></MyInput>
+                            <MyInput v-model:inputValue="password" :type="'password'" :pler="'Пароль'" :id="2">
+                            </MyInput>
+                            <div style="transform-origin: top;" :class="showLogin ? 'hide-inputs' : 'show-inputs'">
+                            <MyInput :style="showLogin ? 'margin: 0' : ''" v-model:inputValue="returnPassword" :type="'password'" :pler="'Повторите пароль'":id="3">
+                            </MyInput>
+                            <MyInput v-model:inputValue="name" :type="'text'" :pler="'Имя'" :id="4">
+                            </MyInput>
+                            <MyInput v-model:inputValue="lastname" :type="'text'" :pler="'Фамилия'" :id="5">
+                            </MyInput>
+                            </div>
+
                         </div>
-                        <input class="form-submit" type="submit" value="Войти в аккаунт">
+                        <input class="form-submit" type="submit" :value="showLogin ? 'Войти в аккаунт' : 'Зарегистрироваться'">
                     </form>
                 </main>
+                <footer>
+                    <div style="display: flex; align-items: center; margin-top: 15px; width: 100%;">
+                        <div style="width: 50%; display: flex; justify-content: center; position: relative; z-index: 2; background-color: white;"
+                            :class="showLogin ? 'left-block-footer-auth-show' : 'left-block-footer-auth-hide'">
+                            <MyLink :class="showLogin ? 'slide-right-lt' : 'slide-left-lt'"
+                                @click="showLogin = !showLogin" style="font-size: 14px; position: relative;"
+                                :gotham="'book'" :color="'purple'"> {{ showLogin ? 'Нет аккаунта?' : 'Есть аккаунт?' }}
+                            </MyLink>
+                        </div>
+                        <div style="width: 50%; display: flex; justify-content: center; position: relative;">
+                            <MyLink :class="showLogin ? 'slide-right-rt' : 'slide-left-rt'"
+                                style="font-size: 14px; position: relative; z-index: 1;" :gotham="'book'"
+                                :color="'purple'">Забыли пароль?</MyLink>
+                        </div>
+                    </div>
+                </footer>
             </div>
         </div>
     </section>
@@ -88,6 +127,7 @@
 <script>
 import store from '@/store';
 import { mapActions } from 'vuex';
+import MyLink from './MyLink.vue';
 
 export default {
     name: "ModalWindow",
@@ -101,9 +141,15 @@ export default {
             default: "none"
         }
     },
-    data(){
-        return{
-            screen: window.innerWidth
+    data() {
+        return {
+            screen: window.innerWidth,
+            showLogin: true,
+            email: '',
+            password: '',
+            returnPassword: '',
+            name: '',
+            lastname: ''
         }
     },
     methods: {
@@ -132,26 +178,88 @@ export default {
         }
     },
     mounted() {
-        if (this.optionRender === 'viewTask' || this.optionRender === 'addTask'){
-        let el = document.getElementById(`task_textarea_title`)
-        el.style.height = '5px';
-        el.style.height = el.scrollHeight + 'px';
-        let el2 = document.getElementById(`task_textarea_description`)
-        el2.style.height = '5px';
-        el2.style.height = el2.scrollHeight + 'px';
-        let el3 = document.getElementById(`task_textarea_responsible`)
-        el3.style.height = '5px';
-        el3.style.height = el3.scrollHeight + 'px';
+        if (this.optionRender === 'viewTask' || this.optionRender === 'addTask') {
+            let el = document.getElementById(`task_textarea_title`)
+            el.style.height = '5px';
+            el.style.height = el.scrollHeight + 'px';
+            let el2 = document.getElementById(`task_textarea_description`)
+            el2.style.height = '5px';
+            el2.style.height = el2.scrollHeight + 'px';
+            let el3 = document.getElementById(`task_textarea_responsible`)
+            el3.style.height = '5px';
+            el3.style.height = el3.scrollHeight + 'px';
         }
     }
 }
 </script>
 
 <style scoped>
-h2{
+h2 {
     font-family: gothambold;
     margin-bottom: 10px;
 }
+
+.show-inputs{
+    transform: rotateX(0deg);
+    max-height: 200px;
+    transition: all 0.4s ease-in
+}
+.hide-inputs{
+    transform: rotateX(90deg);
+    max-height: 0;
+    transition: all 0.4s ease-out
+}
+
+.show-login {
+    transform: rotateX(0deg);
+    transition: all 0.4s ease-in
+}
+.hide-login {
+    transform: rotateX(90deg);
+    transition: all 0.4s ease-out
+}
+
+.show-reg {
+    transform: rotateX(0deg);
+    transition: all 0.4s ease-in
+}
+
+.hide-reg {
+    transform: rotateX(90deg);
+    transition: all 0.4s ease-out
+}
+
+.left-block-footer-auth-show {
+    border-right: 1px solid #906fcd;
+    transition: all 1s cubic-bezier(1, 0, 0, 0.06)
+}
+
+.left-block-footer-auth-hide {
+    border-right: 1px solid #58369700;
+    transition: all 0.1s ease-in-out;
+}
+
+.slide-left-rt {
+    left: -100%;
+    color: #58369700;
+    transition: all 0.4s ease-in-out;
+}
+
+.slide-right-rt {
+    left: 0%;
+    transition: all 0.4s ease-in-out;
+}
+
+.slide-left-lt {
+    left: 50%;
+    transition: left .4s ease-in-out!important;
+}
+
+.slide-right-lt {
+    left: 0%;
+    transition: left .4s ease-in-out!important;
+}
+
 .footer-task {
     background: #E9DFFC;
     display: flex;
@@ -163,12 +271,14 @@ h2{
     margin-top: 15px;
     border-radius: 10px;
 }
-.form-login{
+
+.form-login {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
-.form-submit{
+
+.form-submit {
     width: 100%;
     font-family: gothambold;
     color: white;
@@ -187,43 +297,28 @@ h2{
     box-shadow: 0 3px 0 0 #583697;
     transition: all 0.2s ease-in-out;
 }
-.form-submit:hover{
- background: #9061e7;
- transition: all 0.2s ease-in-out;
+
+.form-submit:hover {
+    background: #9061e7;
+    transition: all 0.2s ease-in-out;
 }
-.form-submit:active{
+
+.form-submit:active {
     top: 0;
     box-shadow: 0 0px 0 0 #583697;
     transition: all 0.1s ease-in-out;
 }
-@media (max-width: 536px){
-    .select-div{
+
+@media (max-width: 536px) {
+    .select-div {
         margin-bottom: 10px;
     }
-}
-@media (max-width: 964px){
-    .select-div{
-        margin-bottom: 10px;
-    }
-}
-@media (min-width: 716px){
-    .select-div{
-        margin-bottom: 10px;
-    }
-}
-a {
-    font-family: gothambook;
-    font-size: 15px;
-    color: #764ac9;
-    text-decoration: underline 1px solid #764ac900;
-    text-underline-offset: 15px;
-    transition: all 0.15s ease-in-out;
 }
 
-a:hover {
-    text-decoration: underline 1px solid #764ac9;
-    text-underline-offset: 3px;
-    transition: all 0.15s ease-in-out;
+@media (max-width: 964px) and (min-width: 716px) {
+    .select-div {
+        margin-bottom: 10px;
+    }
 }
 
 select {
@@ -257,20 +352,23 @@ select:focus {
     animation-duration: .2s;
     animation-iteration-count: 1;
 }
+
 @keyframes blured {
-    from{
+    from {
         backdrop-filter: blur(0px);
         background: rgba(0, 0, 0, 0);
     }
-    to{
+
+    to {
         backdrop-filter: blur(5px);
         background: rgba(0, 0, 0, 0.5);
     }
 }
-@media (max-width: 715px){
-    .modal-window{
-        max-width: 100%!important;
-        width: 100%!important;
+
+@media (max-width: 715px) {
+    .modal-window {
+        max-width: 100% !important;
+        width: 100% !important;
     }
 }
 
@@ -288,17 +386,21 @@ select:focus {
     animation-name: blop;
     animation-duration: .2s;
     animation-iteration-count: 1;
+    transition: all 0.2s ease-in-out;
 }
-@keyframes blop{
-    from{
+
+@keyframes blop {
+    from {
         top: 25px;
         opacity: 0;
     }
-    to{
+
+    to {
         top: 0;
         opacity: 1;
     }
 }
+
 label {
     font-family: gothamlight;
     font-size: 13px;

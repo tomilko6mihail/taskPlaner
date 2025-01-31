@@ -29,7 +29,7 @@
             </div>
             <input @input="updateInput" placeholder="Поиск..." type="text">
             <a @click="toggleFilter = !toggleFilter" role="button" style="cursor: pointer;"><img src="../assets/img/sort.svg" alt="filter"></a>
-            <button @click="$store.commit('setOptionRenderModal', 'profile'), $store.commit('toggleDialog')" class="user__btn"><img src="../assets/img/user-square.svg" alt="user-square"></button>
+            <button @click="$store.commit('setOptionRenderModal', 'auth'), $store.commit('toggleDialog')" class="user__btn"><img src="../assets/img/user-square.svg" alt="user-square"></button>
         </div>
     </header>
 </template>

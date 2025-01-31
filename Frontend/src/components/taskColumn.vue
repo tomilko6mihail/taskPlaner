@@ -11,9 +11,8 @@
                         <img v-if="!isDesktop" style="margin-left: 5px;" :class="toggleShowContent ? 'arrow-down' : 'arrow-up'" src="../assets/img/arrow-down.svg" alt="arrow">
                     </div>
                 </div>
-                <a role="button" style="cursor: pointer;" @click="$store.commit('setOptionRenderModal', 'addTask'), $store.commit('toggleDialog'), $store.commit('setCurrentDisplayTask', {statusId: statusId})">+ задача</a>
+                <MyLink :gotham="'medium'" :color="'black'" @click="$store.commit('setOptionRenderModal', 'addTask'), $store.commit('toggleDialog'), $store.commit('setCurrentDisplayTask', {statusId: statusId})">+ задача</MyLink>
             </div>
-
         </header>
         <main v-if="toggleShowContent || isDesktop" style="height: 100%; overflow-y: auto; overflow-x: hidden;">
             <TaskListRender :selectedSort="selectedSort" :tasks="tasks" :statusId="statusId"></TaskListRender>
@@ -93,19 +92,6 @@ header{
 header h3{
     font-family: gothambold;
     margin-left: 5px;
-}
-header a{
-    color: black;
-    font-family: gothammedium;
-    text-decoration: underline solid #764ac900;
-    text-underline-offset: 15px;
-    transition: all 0.15s ease-in-out;
-}
-header a:hover{
-    color: #764ac9;
-    text-decoration: underline solid #764ac9;
-    text-underline-offset: 3px;
-    transition: all 0.15s ease-in-out;
 }
 header .inner-header {
     border-bottom: 1px solid black;

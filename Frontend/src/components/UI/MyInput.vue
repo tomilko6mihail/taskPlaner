@@ -20,6 +20,10 @@
             id: {
                 type: Number,
                 required: true
+            },
+            active: {
+                type: Boolean,
+                default: true
             }
         },
         data(){
@@ -61,6 +65,7 @@ label{
     left: 10px;
     z-index: 2;
     transition: all 0.2s ease-in-out;
+    pointer-events: none;
 }
 .margin-active{
     margin: 31px 0 10px 0;
