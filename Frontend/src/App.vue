@@ -17,11 +17,10 @@
 <script>
 
 //import dragula from 'dragula'; //включать при деплое
-import dragula from 'dragula';
 import headerComponent from './components/headerComponent.vue';
 import TaskColumn from './components/taskColumn.vue';
 import ModalWindow from './components/UI/modalWindow.vue';
-//import '@/lib/dragula.min.js'
+import './lib/dragula.min.js'
 import store from './store';
 import { mapActions } from 'vuex';
 export default {
