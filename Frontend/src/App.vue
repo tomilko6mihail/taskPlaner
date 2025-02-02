@@ -53,7 +53,7 @@ export default {
       store.commit('setIdStatusTask', [el.id.slice(0, -1), target.id]) //мутируем стейт, передавая айдишник дропнутого айтема и айдишник куда дропнулся контейнер(далее см в store)
 
     })
-    this.fetchTasks()
+    //this.fetchTasks()
   },
   computed: {
     searchTasks() {

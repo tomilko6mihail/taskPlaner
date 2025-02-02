@@ -85,15 +85,15 @@
                         :class="showLogin ? 'hide-reg' : 'show-reg'">Регистрация</h2>
                 </header>
                 <main>
-                    <form novalidate class="form-login" @submit="loginUser" @submit.prevent="" action="" method="get">
+                    <form novalidate class="form-login" @submit="validationBeforeLoginUser" @submit.prevent="" action="" :method="showLogin ? 'get' : 'post'">
                         <div>
-                            <MyInput v-model:inputValue="email" :type="'email'" :pler="'Почта'" :id="1"></MyInput>
-                            <MyInput v-model:inputValue="password" :type="'password'" :pler="'Пароль'" :id="2">
+                            <MyInput :updValidate="updValidate" :required="true" v-model:inputValue="email" :type="'email'" :pler="'Почта'" :id="1"></MyInput>
+                            <MyInput :updValidate="updValidate" :required="true" v-model:inputValue="password" :type="'password'" :pler="'Пароль'" :id="2">
                             </MyInput>
                             <div style="transform-origin: top;" :class="showLogin ? 'hide-inputs' : 'show-inputs'">
-                            <MyInput :style="showLogin ? 'margin: 0' : ''" v-model:inputValue="returnPassword" :type="'password'" :pler="'Повторите пароль'":id="3">
+                            <MyInput :updValidate="updValidate" :required="!showLogin" :style="showLogin ? 'margin: 0' : ''" v-model:inputValue="returnPassword" :type="'password'" :pler="'Повторите пароль'":id="3">
                             </MyInput>
-                            <MyInput v-model:inputValue="name" :type="'text'" :pler="'Имя'" :id="4">
+                            <MyInput :updValidate="updValidate" :required="!showLogin" v-model:inputValue="name" :type="'text'" :pler="'Имя'" :id="4">
                             </MyInput>
                             <MyInput v-model:inputValue="lastname" :type="'text'" :pler="'Фамилия'" :id="5">
                             </MyInput>
@@ -145,11 +145,12 @@ export default {
         return {
             screen: window.innerWidth,
             showLogin: true,
-            email: '',
-            password: '',
-            returnPassword: '',
-            name: '',
-            lastname: ''
+            email: {value: '', isValidate: false},
+            password:  {value: '', isValidate: false},
+            returnPassword:  {value: '', isValidate: false},
+            name:  {value: '', isValidate: false},
+            lastname:  {value: '', isValidate: true},
+            updValidate: 0
         }
     },
     methods: {
@@ -175,6 +176,13 @@ export default {
             const newTask = { id: id, statusId: statusId, title: title, responsible: responsible, description: description }
             store.commit(manipulate, newTask)
             store.commit('toggleDialog')
+        },
+        validationBeforeLoginUser(){
+            if(this.email.isValidate && this.password.isValidate && this.returnPassword.isValidate && this.name.isValidate){
+                //this.loginUser()
+            }else{
+                this.updValidate += 1
+            }
         }
     },
     mounted() {

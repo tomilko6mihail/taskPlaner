@@ -1,7 +1,8 @@
 <template>
-    <div class="margin-passive" :id="'div'+id" style="position: relative;">
-        <label :id="'label' + id" :for="id">{{ pler }}</label>
+    <div class="margin-passive" :id="'div'+id" style="position: relative;" :style="isValidate ? 'margin-bottom: 10px' : 'margin-bottom: 35px'">
+        <label :id="'label' + id" :for="id">{{ pler }}{{ required ? ' *' : ''}}</label>
         <input :id="'input' + id" @blur="setClassBottom" @focus="setClassTop" @input="updateInput" :type="type">
+        <p :id="'alert' + id" :class="isValidate ? 'hide-alert' : 'show-alert'" v-if="required">{{ message }}</p>
     </div>
 </template>
 
@@ -9,7 +10,7 @@
     export default {
         name: 'MyInput',
         props: {
-            pler: {
+            pler: { //плейсхолдер
                 type: String,
                 required: true
             },
@@ -24,31 +25,57 @@
             active: {
                 type: Boolean,
                 default: true
+            },
+            required: {
+                type: Boolean,
+                default: false
+            },
+            updValidate: {
+                type: Number,
+                default: 0
             }
+
         },
         data(){
             return{
-                value: ''
+                value: '',
+                message: '',
+                isValidate: true
             }
         },
         methods: {
             updateInput(event){
                 this.value = document.getElementById('input'+this.id).value
-                this.$emit('update:inputValue', event.target.value)
+                this.$emit('update:inputValue', {value: event.target.value, isValidate: this.isValidate})
             },
             setClassTop(){
+                this.isValidate = true
                 let label = document.getElementById('label'+this.id)
                 if(this.value == ''){
-                    document.getElementById('div'+this.id).className = 'margin-active'
+                    document.getElementById('div'+this.id).className = 'margin-active' 
                     label.className = "show-top"
                 }
             },
             setClassBottom(){
                 let label = document.getElementById('label'+this.id)
                 if(this.value == ''){
-                    document.getElementById('div'+this.id).className = 'margin-passive'
+                    document.getElementById('div'+this.id).className = 'margin-passive' 
                     label.className = "show-bottom"
                 }
+            },
+            validation(){
+                if(this.required){
+                    if(this.type === 'text'){
+                        this.message = 'Обязательно к заполнению'
+                        if(this.value === '') this.isValidate = false
+                        else this.isValidate = true
+                    }
+                }
+            }
+        },
+        watch: {
+            updValidate(){
+                this.validation()
             }
         }
     }
@@ -67,12 +94,34 @@ label{
     transition: all 0.2s ease-in-out;
     pointer-events: none;
 }
+p{
+    position: absolute;
+    font-family: gothammedium;
+    font-size: 11px;
+    color: #ef4c4c;
+}
+.hide-alert{
+    top: 0;
+    transition: 0.2s ease-in-out;
+}
+.show-alert{
+    top: 100%;
+    transition: 0.2s ease-in-out;
+}
 .margin-active{
     margin: 31px 0 10px 0;
     transition: all 0.2s ease-in-out;
 }
 .margin-passive{
     margin: 10px 0 10px 0;
+    transition: all 0.2s ease-in-out;
+}
+.margin-active-alert{
+    margin: 31px 0 20px 0;
+    transition: all 0.2s ease-in-out;
+}
+.margin-passive-alert{
+    margin: 10px 0 20px 0;
     transition: all 0.2s ease-in-out;
 }
 .show-top{
