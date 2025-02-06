@@ -1,5 +1,6 @@
 import './assets/css/main.css'
 import { createApp } from 'vue'
+import dragula from 'dragula'
 import App from './App.vue'
 import store from './store'
 import components from '@/components/UI'
