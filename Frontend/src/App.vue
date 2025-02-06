@@ -14,7 +14,7 @@
   </div>
 </template>
 
-<script>
+<script defer>
 import dragula from 'dragula';//включать при деплое
 import headerComponent from './components/headerComponent.vue';
 import TaskColumn from './components/taskColumn.vue';
