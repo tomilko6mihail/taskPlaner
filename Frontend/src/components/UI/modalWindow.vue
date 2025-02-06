@@ -179,7 +179,7 @@ export default {
         },
         validationBeforeLoginUser(){
             if(this.email.isValidate && this.password.isValidate && this.returnPassword.isValidate && this.name.isValidate){
-                //this.loginUser()
+                this.loginUser()
             }else{
                 this.updValidate += 1
             }

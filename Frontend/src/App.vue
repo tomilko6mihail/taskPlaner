@@ -16,11 +16,11 @@
 
 <script>
 
-//import dragula from 'dragula'; //включать при деплое
+import dragula from 'dragula'; //включать при деплое
 import headerComponent from './components/headerComponent.vue';
 import TaskColumn from './components/taskColumn.vue';
 import ModalWindow from './components/UI/modalWindow.vue';
-import './lib/dragula.min.js'
+//import './lib/dragula.min.js'
 import store from './store';
 import { mapActions } from 'vuex';
 export default {
@@ -54,7 +54,7 @@ export default {
       store.commit('setIdStatusTask', [el.id.slice(0, -1), target.id]) //мутируем стейт, передавая айдишник дропнутого айтема и айдишник куда дропнулся контейнер(далее см в store)
 
     })
-    //this.fetchTasks()
+    this.fetchTasks()
   },
   computed: {
     searchTasks() {
