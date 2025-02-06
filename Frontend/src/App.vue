@@ -19,7 +19,7 @@ import dragula from 'dragula';//включать при деплое
 import headerComponent from './components/headerComponent.vue';
 import TaskColumn from './components/taskColumn.vue';
 import ModalWindow from './components/UI/modalWindow.vue';
-//import './dragula.min.js' //включать при локальной разработке и деплое
+import './dragula.min.js' //включать при локальной разработке и деплое
 import store from './store';
 import { mapActions } from 'vuex';
 export default {
@@ -37,7 +37,7 @@ export default {
       fetchTasks: 'fetchTasks'
     })
   },
-  mounted() {
+  beforeMount() {
     dragula([
       document.getElementById(0),
       document.getElementById(1),
