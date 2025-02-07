@@ -15,11 +15,12 @@
 </template>
 
 <script>
-import dragula from 'dragula';//включать при деплое
+
+//import dragula from 'dragula';
 import headerComponent from './components/headerComponent.vue';
 import TaskColumn from './components/taskColumn.vue';
 import ModalWindow from './components/UI/modalWindow.vue';
-import './lib/dragula.min.js' //включать при локальной разработке и деплое
+//import './lib/dragula.min.js' //включать при локальной разработке и деплое
 import store from './store';
 import { mapActions } from 'vuex';
 export default {
@@ -38,7 +39,6 @@ export default {
     })
   },
   mounted() {
-    
     dragula([
       document.getElementById(0),
       document.getElementById(1),
