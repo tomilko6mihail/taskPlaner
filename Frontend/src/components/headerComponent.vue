@@ -2,7 +2,7 @@
     <header>
         <div style="display: flex; align-items: center;">
             <img src="../assets/img/scroll.svg" height="30" width="30" style="margin-right: 10px;" alt="logo">
-            <h1>Планеровщик задач</h1>
+            <h1>Планировщик задач</h1>
         </div>
         <div style="display: flex; align-items: center; position: relative;">
             <div :class="toggleFilter == true ? 'filter-comp' : 'filter-comp filter-hide'">

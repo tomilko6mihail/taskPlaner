@@ -1,7 +1,9 @@
 <template>
-    <a role="button" :class="`${color} ${gotham}`">
+    <div style="width: auto; height: auto;">
+        <a role="button" :class="`${color} ${gotham}`">
         <slot></slot>
-    </a>
+        </a>
+    </div>
 </template>
 
 <script>
@@ -40,17 +42,17 @@ a:hover{
 }
 
 .black:hover {
-    color: #764ac9;
-    text-decoration-color: #764ac9;
+    color: var(--main-purple);
+    text-decoration-color: var(--main-purple);
 }
 
 .purple{
-    color: #764ac9;
+    color: var(--main-purple);
     text-decoration-color: #764ac900;
 }
 .purple:hover {
-    color: #764ac9;
-    text-decoration-color: #764ac9;
+    color: var(--main-purple);
+    text-decoration-color: var(--main-purple);
 }
 .book{
     font-family: gothambook;

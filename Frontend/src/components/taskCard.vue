@@ -80,7 +80,7 @@ export default {
     transition: all 0.15s ease-in-out;
 }
 button {
-    border: 2px solid #925FF0;
+    border: 2px solid var(--main-purple);
     border-radius: 5px;
     width: 100%;
     height: 36px;
@@ -88,7 +88,7 @@ button {
     justify-content: center;
     align-items: center;
     font-family: gothammedium;
-    color: #925FF0;
+    color: var(--main-purple);
     background: none;
     padding: 5px;
     box-shadow: inset 0 0 0 0 white;

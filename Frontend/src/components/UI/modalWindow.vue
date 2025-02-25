@@ -1,6 +1,7 @@
 <template>
     <section @click="hideDialog" class="modal-bg">
         <div @click.stop class="modal-window">
+            <ProgressBar style="position: absolute; width: 100%; left: 0; z-index: -1;" :class="showForgotPass ? 'show-progress-bar' : 'hide-progress-bar'" :value="progressValue"></ProgressBar>
             <div v-if="optionRender === 'viewTask'">
                 <main>
                     <label>Название:</label>
@@ -78,44 +79,122 @@
                 </footer>
             </div>
             <div v-if="optionRender === 'auth'">
-                <header style="position: relative; height: 20px; margin-bottom: 10px;">
+                <header :class="showForgotPass ? 'height-form-60px' : 'height-form-30px'" style="position: relative;">
                     <h2 style="position: absolute; transform-origin: top;"
                         :class="showLogin ? 'show-login' : 'hide-login'">Вход в аккаунт</h2>
                     <h2 style="position: absolute; transform-origin: bottom;"
-                        :class="showLogin ? 'hide-reg' : 'show-reg'">Регистрация</h2>
+                        :class="showReg ? 'show-reg' : 'hide-reg'">Регистрация</h2>
+                    <h2 style="position: absolute; transform-origin: bottom;"
+                        :class="showForgotPass ? 'show-reg' : 'hide-reg'">Восстановление пароля</h2>
+                        
                 </header>
                 <main>
-                    <form novalidate class="form-login" @submit="validationBeforeLoginUser" @submit.prevent="" action="" :method="showLogin ? 'get' : 'post'">
-                        <div>
-                            <MyInput :updValidate="updValidate" :required="true" v-model:inputValue="email" :type="'email'" :pler="'Почта'" :id="1"></MyInput>
-                            <MyInput :updValidate="updValidate" :required="true" v-model:inputValue="password" :type="'password'" :pler="'Пароль'" :id="2">
-                            </MyInput>
-                            <div style="transform-origin: top;" :class="showLogin ? 'hide-inputs' : 'show-inputs'">
-                            <MyInput :updValidate="updValidate" :required="!showLogin" :style="showLogin ? 'margin: 0' : ''" v-model:inputValue="returnPassword" :type="'password'" :pler="'Повторите пароль'":id="3">
-                            </MyInput>
-                            <MyInput :updValidate="updValidate" :required="!showLogin" v-model:inputValue="name" :type="'text'" :pler="'Имя'" :id="4">
-                            </MyInput>
-                            <MyInput v-model:inputValue="lastname" :type="'text'" :pler="'Фамилия'" :id="5">
-                            </MyInput>
+                    <form novalidate class="form-login" @submit="validationBeforeLoginUser" @submit.prevent="" action=""
+                        :method="showLogin || showForgotPass && !showReg ? 'get' : 'post'">
+                        <div :style="showForgotPass ? 'display: flex; flex-direction: column; justify-content: center;' : ''">
+                            <div :class="showForgotPass ? 'slide-email-to-bottom' : 'slide-email-to-top'">
+                                <MyInput :updValidate="updValidate" :required="true" v-model:inputValue="email"
+                                :type="'email'" :pler="'Почта'" :id="1"></MyInput>
+                            </div>
+                                <MyInput
+                                :class="showForgotPass ? 'hide-pass' : 'show-pass'" 
+                                :active="!showForgotPass"
+                                style="transform-origin: top;"
+                                :updValidate="updValidate" :required="showLogin || showReg" v-model:inputValue="password"
+                                :type="'password'" :pler="'Пароль'" :id="2"
+                                :cleanValue="cleanValuePass"
+                                >
+                                </MyInput>
+                            <div style="transform-origin: top;"
+                                :class="showReg ? 'show-inputs' : 'hide-inputs'">
+                                <MyInput :comparedValue="password" :updValidate="updValidate" :required="showReg"
+                                    :style="showLogin ? 'margin: 0' : ''" v-model:inputValue="returnPassword"
+                                    :type="'password return'" :pler="'Повторите пароль'" :id="3">
+                                </MyInput>
+                                <MyInput :updValidate="updValidate" :required="showReg" v-model:inputValue="name"
+                                    :type="'text'" :pler="'Имя'" :id="4">
+                                </MyInput>
+                                <MyInput v-model:inputValue="lastname" :type="'text'" :pler="'Фамилия'" :id="5">
+                                </MyInput>
                             </div>
 
                         </div>
-                        <input class="form-submit" type="submit" :value="showLogin ? 'Войти в аккаунт' : 'Зарегистрироваться'">
+                        <input v-if="showLogin" class="form-submit" type="submit"
+                            value="Войти">
+                            <input v-if="showReg" class="form-submit" type="submit"
+                            value="Зарегистрироваться">
+                            <input @click="progressValue += 20" v-if="showForgotPass" class="form-submit" type="submit"
+                            value="Далее">
                     </form>
                 </main>
                 <footer>
                     <div style="display: flex; align-items: center; margin-top: 15px; width: 100%;">
-                        <div style="width: 50%; display: flex; justify-content: center; position: relative; z-index: 2; background-color: white;"
-                            :class="showLogin ? 'left-block-footer-auth-show' : 'left-block-footer-auth-hide'">
-                            <MyLink :class="showLogin ? 'slide-right-lt' : 'slide-left-lt'"
-                                @click="showLogin = !showLogin" style="font-size: 14px; position: relative;"
-                                :gotham="'book'" :color="'purple'"> {{ showLogin ? 'Нет аккаунта?' : 'Есть аккаунт?' }}
-                            </MyLink>
+                        <div style="width: 50%;
+                                height: 16px;
+                                display: flex;
+                                position: relative;
+                                text-align: center;
+                                z-index: 2;
+                                background-color: white;"
+                            :class="showLogin || showForgotPass ? 'left-block-footer-auth-show' : 'left-block-footer-auth-hide'">
+                            <span :class="showLogin || showForgotPass ? 'slide-right-lt' : 'slide-left-lt'"
+                                style="position: relative;
+                                        width: 100%;
+                                        display: flex;
+                                        justify-content: center;
+                                        align-items: center;">
+                                <MyLink @click="showForgotPass = false; showLogin = !showLogin; showReg = !showReg; progressValue = 0" 
+                                    style="font-size: 14px; position: absolute; transform-origin: top;"
+                                    :class="showForgotPass ? 'hide-login' : 'show-login'"
+                                    :gotham="'book'" :color="'purple'"> {{ showLogin || showForgotPass ? 'Нет аккаунта?' :
+                                    'Есть аккаунт?' }}
+                                </MyLink>
+                            </span>
+                            <span :class="showLogin || showForgotPass ? 'slide-right-lt' : 'slide-left-lt'"
+                                style="    position: relative;
+                                        display: flex;
+                                        justify-content: center;
+                                        align-items: center;
+                                        left: -50%;">
+                                <MyLink @click="showForgotPass = false; showLogin = true; showReg = false; progressValue = 0"
+                                    :class="showForgotPass ? 'show-reg' : 'hide-reg'"
+                                    style="font-size: 14px; position: absolute; transform-origin: bottom;"
+                                    :gotham="'book'" :color="'purple'">Вход
+                                </MyLink>
+                            </span>
                         </div>
-                        <div style="width: 50%; display: flex; justify-content: center; position: relative;">
-                            <MyLink :class="showLogin ? 'slide-right-rt' : 'slide-left-rt'"
-                                style="font-size: 14px; position: relative; z-index: 1;" :gotham="'book'"
-                                :color="'purple'">Забыли пароль?</MyLink>
+                        <div style="width: 50%;
+                                    height: 16px;
+                                    display: flex;
+                                    position: relative;
+                                    text-align: center;">
+
+                            <span style="position: relative;
+                                    z-index: 1;
+                                    display: flex;
+                                    width: 100%;
+                                    justify-content: center;
+                                    align-items: center;" 
+                                    :class="showLogin || showForgotPass ? 'slide-right-rt' : 'slide-left-rt'">
+
+                                <MyLink 
+                                    @click="showForgotPass = true; showReg = false; showLogin = false; progressValue = 20; cleanValuePass = !cleanValuePass"
+                                    :class="showLogin ? 'show-login' : 'hide-login'"
+                                    style="font-size: 14px; position: absolute; transform-origin: top;" :gotham="'book'"
+                                    :color="'purple'">Забыли пароль?</MyLink>
+                                    
+                            </span>
+                            <span style="position: relative;
+                                    display: flex;
+                                    left: -50%;
+                                    z-index: 1;
+                                    justify-content: center;"
+                                :class="showLogin || showForgotPass ? 'slide-right-rt' : 'slide-left-rt'">
+                                <MyLink @click="showForgotPass = false; showLogin = false; showReg = true; progressValue = 0"
+                                    :class="showForgotPass ? 'show-reg' : 'hide-reg'"
+                                    style="font-size: 14px; position: absolute; transform-origin: bottom;"
+                                    :gotham="'book'" :color="'purple'">Регистрация</MyLink>
+                            </span>
                         </div>
                     </div>
                 </footer>
@@ -145,11 +224,15 @@ export default {
         return {
             screen: window.innerWidth,
             showLogin: true,
-            email: {value: '', isValidate: false},
-            password:  {value: '', isValidate: false},
-            returnPassword:  {value: '', isValidate: false},
-            name:  {value: '', isValidate: false},
-            lastname:  {value: '', isValidate: true},
+            showForgotPass: false,
+            showReg: false,
+            progressValue: 0,
+            cleanValuePass: false,
+            email: { value: '', isValidate: false },
+            password: { value: '', isValidate: false },
+            returnPassword: { value: '', isValidate: false },
+            name: { value: '', isValidate: false },
+            lastname: { value: '', isValidate: true },
             updValidate: 0
         }
     },
@@ -177,11 +260,11 @@ export default {
             store.commit(manipulate, newTask)
             store.commit('toggleDialog')
         },
-        validationBeforeLoginUser(){
-            if(this.email.isValidate && this.password.isValidate && this.returnPassword.isValidate && this.name.isValidate){
-                this.loginUser()
-            }else{
-                this.updValidate += 1
+        validationBeforeLoginUser() {
+            if (this.email.isValidate && this.password.isValidate && this.returnPassword.isValidate && this.name.isValidate) {
+                this.loginUser() // если все поля формы валидированы, логиним юзера
+            } else {
+                this.updValidate += 1 // иначе обновляем ошибки у формы
             }
         }
     },
@@ -207,12 +290,56 @@ h2 {
     margin-bottom: 10px;
 }
 
-.show-inputs{
+.slide-email-to-bottom{
+    top: 10px!important;
+    transition: all 0.3s ease-in-out;
+}
+.slide-email-to-top{
+    top: 0px!important;
+    transition: all 0.3s ease-in-out;
+}
+
+.show-progress-bar{
+    top: -30px;
+    opacity: 1;
+    transform: scale(1);
+    transition: all 0.3s ease-in-out;
+}
+.hide-progress-bar{
+    top: 0;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 0.3s ease-in-out;
+}
+.show-pass {
+    max-height: 100px;
+    margin: 10px 0 10px 0;
+    transform: rotateX(0deg);
+    transition: all 0.3s ease-in
+}
+
+.hide-pass {
+    max-height: 0px;
+    padding: 0!important;
+    margin: 0px !important;
+    transform: rotateX(90deg);
+    transition: all 0.3s ease-out
+}
+.height-form-60px{
+    height: 60px;
+    transition: all 0.2s ease-in-out;
+}
+.height-form-30px{
+    height: 30px;
+    transition: all 0.2s ease-in-out;
+}
+.show-inputs {
     transform: rotateX(0deg);
     max-height: 200px;
     transition: all 0.4s ease-in
 }
-.hide-inputs{
+
+.hide-inputs {
     transform: rotateX(90deg);
     max-height: 0;
     transition: all 0.4s ease-out
@@ -220,21 +347,22 @@ h2 {
 
 .show-login {
     transform: rotateX(0deg);
-    transition: all 0.4s ease-in
+    transition: all 0.3s ease-in
 }
+
 .hide-login {
     transform: rotateX(90deg);
-    transition: all 0.4s ease-out
+    transition: all 0.3s ease-out
 }
 
 .show-reg {
     transform: rotateX(0deg);
-    transition: all 0.4s ease-in
+    transition: all 0.3s ease-in
 }
 
 .hide-reg {
     transform: rotateX(90deg);
-    transition: all 0.4s ease-out
+    transition: all 0.3s ease-out
 }
 
 .left-block-footer-auth-show {
@@ -249,23 +377,24 @@ h2 {
 
 .slide-left-rt {
     left: -100%;
-    color: #58369700;
+    opacity: 0;
     transition: all 0.4s ease-in-out;
 }
 
 .slide-right-rt {
+    opacity: 1;
     left: 0%;
     transition: all 0.4s ease-in-out;
 }
 
 .slide-left-lt {
     left: 50%;
-    transition: left .4s ease-in-out!important;
+    transition: all .4s ease-in-out !important;
 }
 
 .slide-right-lt {
     left: 0%;
-    transition: left .4s ease-in-out!important;
+    transition: all .4s ease-in-out !important;
 }
 
 .footer-task {
@@ -294,7 +423,7 @@ h2 {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #764ac9;
+    background: var(--main-purple);
     border-radius: 150px;
     outline: none;
     border: none;
@@ -307,7 +436,7 @@ h2 {
 }
 
 .form-submit:hover {
-    background: #9061e7;
+    background: #773ce3;
     transition: all 0.2s ease-in-out;
 }
 
@@ -335,7 +464,7 @@ select {
     background: none;
     appearance: none;
     outline: none;
-    color: #764ac9;
+    color: var(--main-purple);
 }
 
 select:focus {

@@ -1,6 +1,6 @@
 <template>
     <section :id="statusId">
-        <div v-show="this.length_of_element_in_column === 1">
+        <div style="pointer-events: none;" v-show="this.length_of_element_in_column === 1">
             <h3 style="margin-bottom: 4px;">Здесь ничего нет.</h3>
             <p>Перетащите задачу в эту область, или создайте новую.</p>
         </div>
