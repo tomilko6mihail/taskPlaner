@@ -20,7 +20,7 @@
   "devDependencies": {
     "@types/dragula": "^3.7.5",
     "@vitejs/plugin-vue": "^5.2.1",
-    "vite": "^6.0.5",
+    "vite": "^6.4.1",
     "vite-plugin-vue-devtools": "^7.6.8"
   }
 }
